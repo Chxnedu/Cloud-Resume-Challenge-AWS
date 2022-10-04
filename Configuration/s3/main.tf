@@ -1,19 +1,21 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "4.33.0"
+    }
+  }
+}
+
 provider "aws" {
   region = "us-east-1"
   access_key = myaccesskey
   secret_key = mysecretkey
 }
-terraform {
-  backend "s3" {
-    bucket = "crc-state"
-    key = "s3/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
+
 resource "aws_s3_bucket" "chxnedu-resume-crc" {
   bucket = "chxnedu-resume-crc"
 }
-
 
 resource "aws_s3_bucket_policy" "public-access" {
   bucket = aws_s3_bucket.chxnedu-resume-crc.id
@@ -41,6 +43,9 @@ resource "aws_s3_bucket_website_configuration" "resume-site" {
   index_document {
     suffix = "index.html"
   }
+  error_document {
+    key = "index.html"
+  }
 }
 
 resource "aws_s3_object" "index" {
@@ -48,6 +53,9 @@ resource "aws_s3_object" "index" {
   bucket = aws_s3_bucket.chxnedu-resume-crc.id
   source = "./Files/index.html"
   content_type = "text/html"
+  depends_on = [
+    aws_s3_bucket_website_configuration.resume-site
+  ]
 }
 
 resource "aws_s3_object" "styles" {
@@ -55,6 +63,12 @@ resource "aws_s3_object" "styles" {
   bucket = aws_s3_bucket.chxnedu-resume-crc.id
   source = "./Files/styles.css"
   content_type = "text/css"
+  depends_on = [
+    aws_s3_bucket_website_configuration.resume-site
+  ]
 }
 
+output "website_endpoint" {
+  value = aws_s3_bucket_website_configuration.resume-site.website_endpoint
+}
 
