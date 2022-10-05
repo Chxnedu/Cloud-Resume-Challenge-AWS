@@ -109,6 +109,13 @@ resource "aws_cloudfront_distribution" "s3resume-distrubution" {
     target_origin_id       = local.s3_origin_id
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
+
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
   }
 
   restrictions {
@@ -129,7 +136,7 @@ resource "aws_cloudfront_distribution" "s3resume-distrubution" {
     acm_certificate_arn = aws_acm_certificate.domain-cert.arn
     ssl_support_method = "sni-only"
   }
-  
+
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site,
     aws_acm_certificate.domain-cert
