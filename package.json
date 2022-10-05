@@ -1,12 +1,15 @@
 {
-  "name": "cloud-resume-challenge-aws",
+  "name": "Cloud-Resume-Challenge-AWS",
   "version": "1.0.0",
-  "description": "",
+  "description": "cypress test",
   "main": "cypress.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run"
   },
-  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "cypress": "^10.0.0"
+  }
 }

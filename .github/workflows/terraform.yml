@@ -100,7 +100,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.2.0
         with:
-          spec: cypress/integration/spec1.js
-          browser: chrome
+          spec: cypress/e2e/spec.cy.js
