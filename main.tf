@@ -1,16 +1,15 @@
 terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "4.33.0"
+  backend "remote" {
+    organization = "chxnedu-crc"
+
+    workspaces {
+      name = "Prod-Env"
     }
   }
 }
 
 provider "aws" {
   region = "us-east-1"
-  access_key = myaccesskey
-  secret_key = mysecretkey
 }
 
 resource "aws_s3_bucket" "chxnedu-resume-crc" {
@@ -46,7 +45,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
   bucket = aws_s3_bucket.chxnedu-resume-crc.bucket
   rule {
     apply_server_side_encryption_by_default {
-        sse_algorithm = var.sse_algorithm
+      sse_algorithm = var.sse_algorithm
     }
   }
 }
@@ -62,9 +61,9 @@ resource "aws_s3_bucket_website_configuration" "resume-site" {
 }
 
 resource "aws_s3_object" "index" {
-  key = "index.html"
-  bucket = aws_s3_bucket.chxnedu-resume-crc.id
-  source = "./Files/index.html"
+  key          = "index.html"
+  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
+  source       = "./Files/index.html"
   content_type = "text/html"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
@@ -72,9 +71,9 @@ resource "aws_s3_object" "index" {
 }
 
 resource "aws_s3_object" "styles" {
-  key = "styles.css"
-  bucket = aws_s3_bucket.chxnedu-resume-crc.id
-  source = "./Files/styles.css"
+  key          = "styles.css"
+  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
+  source       = "./Files/styles.css"
   content_type = "text/css"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
@@ -86,9 +85,9 @@ output "website_endpoint" {
 }
 
 resource "aws_acm_certificate" "domain-cert" {
-  domain_name = "chxnedu.com"
+  domain_name               = "chxnedu.com"
   subject_alternative_names = ["*.chxnedu.com"]
-  validation_method = "DNS"
+  validation_method         = "DNS"
   lifecycle {
     create_before_destroy = true
   }
@@ -101,23 +100,23 @@ locals {
 resource "aws_cloudfront_distribution" "s3resume-distrubution" {
   origin {
     domain_name = aws_s3_bucket.chxnedu-resume-crc.bucket_regional_domain_name
-    origin_id = local.s3_origin_id
+    origin_id   = local.s3_origin_id
   }
 
   default_cache_behavior {
-    allowed_methods = [ "GET", "HEAD" ]
-    target_origin_id = local.s3_origin_id
+    allowed_methods        = ["GET", "HEAD"]
+    target_origin_id       = local.s3_origin_id
     viewer_protocol_policy = "redirect-to-https"
-    compress = true
+    compress               = true
   }
 
-  enabled = true
-  is_ipv6_enabled = true
-  comment = "Resume Site Distribution"
+  enabled             = true
+  is_ipv6_enabled     = true
+  comment             = "Resume Site Distribution"
   default_root_object = "index.html"
-  aliases = "resume.chxnedu.com"
-  price_class = "PriceClass_All"
-  
+  aliases             = "resume.chxnedu.com"
+  price_class         = "PriceClass_All"
+
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate.domain-cert.arn
   }
