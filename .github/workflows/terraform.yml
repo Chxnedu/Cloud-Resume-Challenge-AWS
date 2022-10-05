@@ -90,3 +90,16 @@ jobs:
     
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
+  
+  test:
+    name: Cypress run
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          spec: cypress/integration/spec1.js
+          browser: chrome
