@@ -92,6 +92,7 @@ jobs:
       run: terraform apply -auto-approve -input=false
   
   test:
+    needs: terraform
     name: Cypress run
     runs-on: ubuntu-20.04
     steps:
