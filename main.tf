@@ -19,7 +19,20 @@ resource "aws_s3_bucket" "chxnedu-resume-crc" {
 
 resource "aws_s3_bucket_policy" "public-access" {
   bucket = aws_s3_bucket.chxnedu-resume-crc.id
-  policy = file(policy.json)
+  policy = <<-EOS
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::chxnedu-resume-crc/*"
+        }
+    ]
+}
+EOS
 }
 
 resource "aws_s3_bucket_ownership_controls" "bucket_ownership" {
@@ -72,3 +85,44 @@ output "website_endpoint" {
   value = aws_s3_bucket_website_configuration.resume-site.website_endpoint
 }
 
+resource "aws_acm_certificate" "domain-cert" {
+  domain_name = "chxnedu.com"
+  subject_alternative_names = ["*.chxnedu.com"]
+  validation_method = "DNS"
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+locals {
+  s3_origin_id = "crc-resume-origin"
+}
+
+resource "aws_cloudfront_distribution" "s3resume-distrubution" {
+  origin {
+    domain_name = aws_s3_bucket.chxnedu-resume-crc.bucket_regional_domain_name
+    origin_id = local.s3_origin_id
+  }
+
+  default_cache_behavior {
+    allowed_methods = [ "GET", "HEAD" ]
+    target_origin_id = local.s3_origin_id
+    viewer_protocol_policy = "redirect-to-https"
+    compress = true
+  }
+
+  enabled = true
+  is_ipv6_enabled = true
+  comment = "Resume Site Distribution"
+  default_root_object = "index.html"
+  aliases = "resume.chxnedu.com"
+  price_class = "PriceClass_All"
+  
+  viewer_certificate {
+    acm_certificate_arn = aws_acm_certificate.domain-cert.arn
+  }
+  depends_on = [
+    aws_s3_bucket_website_configuration.resume-site,
+    aws_acm_certificate.domain-cert
+  ]
+}
