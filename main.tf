@@ -125,8 +125,11 @@ resource "aws_cloudfront_distribution" "s3resume-distrubution" {
   price_class         = "PriceClass_All"
 
   viewer_certificate {
+    cloudfront_default_certificate = true
     acm_certificate_arn = aws_acm_certificate.domain-cert.arn
+    ssl_support_method = "sni-only"
   }
+  
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site,
     aws_acm_certificate.domain-cert
