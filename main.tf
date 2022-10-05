@@ -105,16 +105,23 @@ resource "aws_cloudfront_distribution" "s3resume-distrubution" {
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD"]
+    cached_methods = [ "GET", "HEAD" ]
     target_origin_id       = local.s3_origin_id
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
   }
 
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "Resume Site Distribution"
   default_root_object = "index.html"
-  aliases             = "resume.chxnedu.com"
+  aliases             = [ "resume.chxnedu.com" ]
   price_class         = "PriceClass_All"
 
   viewer_certificate {
