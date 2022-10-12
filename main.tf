@@ -80,6 +80,16 @@ resource "aws_s3_object" "styles" {
   ]
 }
 
+resource "aws_s3_object" "script" {
+  key          = "index.js"
+  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
+  source       = "./Files/index.js"
+  content_type = "text/javascript"
+  depends_on = [
+    aws_s3_bucket_website_configuration.resume-site
+  ]
+}
+
 output "website_endpoint" {
   value = aws_s3_bucket_website_configuration.resume-site.website_endpoint
 }

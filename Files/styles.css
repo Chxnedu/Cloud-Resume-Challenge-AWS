@@ -55,3 +55,10 @@ hr {
     color: purple;
     font-weight: 500;
 }
+#counter {
+    color: purple;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 90px;
+}
