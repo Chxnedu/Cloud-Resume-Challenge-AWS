@@ -94,8 +94,8 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
 
-    -name: Terrafrom Destroy
-     run: terraform destroy -auto-approve
+    - name: Terrafrom Destroy
+      run: terraform destroy -auto-approve
   
   test:
     needs: terraform
