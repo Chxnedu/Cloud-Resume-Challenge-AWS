@@ -79,8 +79,14 @@ jobs:
       run: terraform init
 
     # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan
+    - name: Destroy Index
+      run: terraform destroy -target=aws_s3_object.index -auto-approve
+      
+    - name: Destroy Styles
+      run: terraform destroy -target=aws_s3_object.styles -auto-approve
+
+    - name: Destroy Scripts
+      run: terraform destroy -target=aws_s3_object.script -auto-approve
 
       # On push to "master", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
