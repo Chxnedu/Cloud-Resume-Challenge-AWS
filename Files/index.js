@@ -1,4 +1,4 @@
-fetch('https://oresm0aeck.execute-api.us-east-1.amazonaws.com/update_count')
+fetch('https://jl0b5q4gk9.execute-api.us-east-1.amazonaws.com')
 .then(data => { return data.json(); })
 .then(count => { 
     console.log(count.N); 
