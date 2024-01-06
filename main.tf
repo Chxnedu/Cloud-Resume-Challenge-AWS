@@ -41,6 +41,7 @@ resource "aws_s3_bucket_policy" "public-access" {
     ]
 }
 EOS
+  depends_on = [ aws_s3_bucket_public_access_block.chxnedu-resume-crc ]
 }
 
 resource "aws_s3_bucket_ownership_controls" "bucket_ownership" {
