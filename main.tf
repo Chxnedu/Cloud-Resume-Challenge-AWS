@@ -148,7 +148,7 @@ resource "aws_cloudfront_distribution" "s3resume-distrubution" {
   is_ipv6_enabled     = true
   comment             = "Resume Site Distribution"
   default_root_object = "index.html"
-  aliases             = [ "resume.chxnedu.online" ]
+  aliases             = [ "resume.chxnedu.online","chxnedu.online" ]
   price_class         = "PriceClass_All"
 
   viewer_certificate {
