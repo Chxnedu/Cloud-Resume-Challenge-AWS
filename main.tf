@@ -70,58 +70,11 @@ resource "aws_s3_bucket_website_configuration" "resume-site" {
   }
 }
 
-resource "aws_s3_object" "index" {
-  key          = "index.html"
+resource "aws_s3_object" "site_files" {
+  for_each = fileset("./Files", "**")
   bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/index.html"
-  content_type = "text/html"
-  depends_on = [
-    aws_s3_bucket_website_configuration.resume-site
-  ]
-}
-
-resource "aws_s3_object" "favicon" {
-  key          = "favicon.png"
-  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/favicon.png"
-  content_type = "image/png"
-  depends_on = [
-    aws_s3_bucket_website_configuration.resume-site
-  ]
-}
-
-resource "aws_s3_object" "css" {
-  key          = "css"
-  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/css"
-  depends_on = [
-    aws_s3_bucket_website_configuration.resume-site
-  ]
-}
-
-resource "aws_s3_object" "images" {
-  key          = "images"
-  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/images"
-  depends_on = [
-    aws_s3_bucket_website_configuration.resume-site
-  ]
-}
-
-resource "aws_s3_object" "inc" {
-  key          = "inc"
-  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/inc"
-  depends_on = [
-    aws_s3_bucket_website_configuration.resume-site
-  ]
-}
-
-resource "aws_s3_object" "js" {
-  key          = "js"
-  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/js"
-  content_type = "text/html"
+  key          = each.key
+  source       = "./Files/${each.value}"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
   ]
