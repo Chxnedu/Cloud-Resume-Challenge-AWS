@@ -70,22 +70,26 @@ resource "aws_s3_bucket_website_configuration" "resume-site" {
   }
 }
 
-resource "aws_s3_object" "html_files" {
-  for_each = fileset("./Files", "**/*.html")
-  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  key          = each.key
-  source       = "./Files/${each.value}"
-  content_type = "text/html"
-  depends_on = [
-    aws_s3_bucket_website_configuration.resume-site
-  ]
+locals {
+  mime_types = {
+    "css"  = "text/css"
+    "html" = "text/html"
+    "ico"  = "image/vnd.microsoft.icon"
+    "js"   = "application/javascript"
+    "json" = "application/json"
+    "map"  = "application/json"
+    "png"  = "image/png"
+    "svg"  = "image/svg+xml"
+    "txt"  = "text/plain"
+  }
 }
 
 resource "aws_s3_object" "site_files" {
-  for_each = fileset("./Files", "**")
+  for_each = fileset("./Files", "**/*.*")
   bucket       = aws_s3_bucket.chxnedu-resume-crc.id
   key          = each.key
-  source       = "./Files/${each.value}"
+  source       = "./Files/${each.key}"
+  content_type = lookup(tomap(local.mime_types), element(split(".", each.key), length(split(".", each.key)) - 1))
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
   ]
