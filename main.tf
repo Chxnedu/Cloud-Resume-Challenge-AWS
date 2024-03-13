@@ -66,8 +66,19 @@ resource "aws_s3_bucket_website_configuration" "resume-site" {
     suffix = "index.html"
   }
   error_document {
-    key = "index.html"
+    key = ""
   }
+}
+
+resource "aws_s3_object" "html_files" {
+  for_each = fileset("./Files", "**/*.html")
+  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
+  key          = each.key
+  source       = "./Files/${each.value}"
+  content_type = "text/html"
+  depends_on = [
+    aws_s3_bucket_website_configuration.resume-site
+  ]
 }
 
 resource "aws_s3_object" "site_files" {
