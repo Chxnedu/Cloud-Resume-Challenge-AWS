@@ -79,8 +79,16 @@ locals {
     "json" = "application/json"
     "map"  = "application/json"
     "png"  = "image/png"
+    "jpg"  = "image/jpg"
     "svg"  = "image/svg+xml"
     "txt"  = "text/plain"
+    "eot"  = "application/vnd.ms-fontobject"
+    "ttf"  = "font/ttf"
+    "woff" = "font/woff"
+    "otf"  = "font/otf"
+    "less" = "plain/text"
+    "scss" = "text/x-scss"
+
   }
 }
 
