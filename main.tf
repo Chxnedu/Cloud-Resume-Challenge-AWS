@@ -88,7 +88,8 @@ locals {
     "otf"  = "font/otf"
     "less" = "plain/text"
     "scss" = "text/x-scss"
-
+    "gif"  = "image/gif"
+    "php"  = "application/x-httpd-php"
   }
 }
 
