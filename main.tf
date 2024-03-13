@@ -80,25 +80,53 @@ resource "aws_s3_object" "index" {
   ]
 }
 
-resource "aws_s3_object" "styles" {
-  key          = "styles.css"
+resource "aws_s3_object" "favicon" {
+  key          = "favicon.png"
   bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/styles.css"
-  content_type = "text/css"
+  source       = "./Files/favicon.png"
+  content_type = "image/png"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
   ]
 }
 
-resource "aws_s3_object" "script" {
-  key          = "index.js"
+resource "aws_s3_object" "css" {
+  key          = "css"
   bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/index.js"
-  content_type = "text/javascript"
+  source       = "./Files/css/"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
   ]
 }
+
+resource "aws_s3_object" "images" {
+  key          = "images"
+  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
+  source       = "./Files/images/"
+  depends_on = [
+    aws_s3_bucket_website_configuration.resume-site
+  ]
+}
+
+resource "aws_s3_object" "inc" {
+  key          = "inc"
+  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
+  source       = "./Files/inc/"
+  depends_on = [
+    aws_s3_bucket_website_configuration.resume-site
+  ]
+}
+
+resource "aws_s3_object" "js" {
+  key          = "js"
+  bucket       = aws_s3_bucket.chxnedu-resume-crc.id
+  source       = "./Files/js/"
+  content_type = "text/html"
+  depends_on = [
+    aws_s3_bucket_website_configuration.resume-site
+  ]
+}
+
 
 output "website_endpoint" {
   value = aws_s3_bucket_website_configuration.resume-site.website_endpoint

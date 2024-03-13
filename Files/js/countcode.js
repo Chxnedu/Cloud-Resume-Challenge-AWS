@@ -3,6 +3,6 @@ fetch('https://x2ufdd9eb5.execute-api.us-east-1.amazonaws.com/update_count')
 .then(count => { 
     console.log(count.N); 
     document.getElementById('counter').
-    innerHTML= count.N + ' People have viewed this resume';
+    innerHTML= 'This page has been visited ' + count.N + ' times';
 });
 
