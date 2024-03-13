@@ -93,7 +93,7 @@ resource "aws_s3_object" "favicon" {
 resource "aws_s3_object" "css" {
   key          = "css"
   bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/css/"
+  source       = "./Files/css"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
   ]
@@ -102,7 +102,7 @@ resource "aws_s3_object" "css" {
 resource "aws_s3_object" "images" {
   key          = "images"
   bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/images/"
+  source       = "./Files/images"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
   ]
@@ -111,7 +111,7 @@ resource "aws_s3_object" "images" {
 resource "aws_s3_object" "inc" {
   key          = "inc"
   bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/inc/"
+  source       = "./Files/inc"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
   ]
@@ -120,7 +120,7 @@ resource "aws_s3_object" "inc" {
 resource "aws_s3_object" "js" {
   key          = "js"
   bucket       = aws_s3_bucket.chxnedu-resume-crc.id
-  source       = "./Files/js/"
+  source       = "./Files/js"
   content_type = "text/html"
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
