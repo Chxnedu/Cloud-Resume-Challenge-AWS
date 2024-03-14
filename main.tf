@@ -99,6 +99,7 @@ resource "aws_s3_object" "site_files" {
   key          = each.key
   source       = "./Files/${each.key}"
   content_type = lookup(tomap(local.mime_types), element(split(".", each.key), length(split(".", each.key)) - 1))
+  etag = filemd5("./Files/${each.key}")
   depends_on = [
     aws_s3_bucket_website_configuration.resume-site
   ]
