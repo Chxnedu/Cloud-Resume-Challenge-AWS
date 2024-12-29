@@ -111,8 +111,8 @@ output "website_endpoint" {
 }
 
 resource "aws_acm_certificate" "domain-cert" {
-  domain_name               = "chxnedu.online"
-  subject_alternative_names = ["*.chxnedu.online"]
+  domain_name               = "chxnedu.xyz"
+  subject_alternative_names = ["*.chxnedu.xyz"]
   validation_method         = "DNS"
   lifecycle {
     create_before_destroy = true
@@ -154,7 +154,7 @@ resource "aws_cloudfront_distribution" "s3resume-distrubution" {
   is_ipv6_enabled     = true
   comment             = "Resume Site Distribution"
   default_root_object = "index.html"
-  aliases             = [ "resume.chxnedu.online","chxnedu.online" ]
+  aliases             = [ "resume.chxnedu.xyz","chxnedu.xyz" ]
   price_class         = "PriceClass_All"
 
   viewer_certificate {
