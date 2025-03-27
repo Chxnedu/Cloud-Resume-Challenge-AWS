@@ -237,7 +237,7 @@ ul#nav li.current a { color: #F06000; }
 
 #resume {
    background: #fff;
-   padding-top: 90px;
+   padding-top: -100px;
    padding-bottom: 72px;
    overflow: hidden;
 }
@@ -277,6 +277,56 @@ ul#nav li.current a { color: #F06000; }
    margin-left: 5px;
 }
 #resume .date {
+   font: 15px/24px 'opensans-regular', sans-serif;
+   margin-top: 6px;
+}
+
+/* ------------------------------------------------------------------ */
+/* d. Experience Section
+/* ------------------------------------------------------------------ */
+
+#experience {
+   background: #fff;
+   padding-top: 90px;
+   padding-bottom: 72px;
+   overflow: hidden;
+}
+
+#experience a, #experience a:visited  { color: #11ABB0; }
+#experience a:hover, #experience a:focus { color: #313131; }
+
+#experience h1 {
+   font: 18px/24px 'opensans-bold', sans-serif;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+}
+#experience h1 span {
+   border-bottom: 3px solid #11ABB0;
+   padding-bottom: 6px;
+}
+#experience h3 {
+   font: 25px/30px 'opensans-bold', sans-serif;
+}
+
+#experience .header-col { padding-top: 9px; }
+#experience .main-col { padding-right: 10%; }
+
+.education, .work {
+   margin-bottom: 48px;
+   padding-bottom: 24px;
+   border-bottom: 1px solid #E8E8E8;
+}
+#experience .info {
+   font: 16px/24px 'librebaskerville-italic', serif;
+   color: #6E7881;
+   margin-bottom: 18px;
+   margin-top: 9px;
+}
+#experience .info span {
+   margin-right: 5px;
+   margin-left: 5px;
+}
+#experience .date {
    font: 15px/24px 'opensans-regular', sans-serif;
    margin-top: 6px;
 }
@@ -416,12 +466,14 @@ ul#nav li.current a { color: #F06000; }
    padding-bottom: 60px;
 }
 #portfolio h1 {
-   font: 15px/24px 'opensans-semibold', sans-serif;
+   font: 25px/34px 'opensans-semibold', sans-serif;
    text-transform: uppercase;
+   font-weight: bold;
    letter-spacing: 1px;
-   text-align: center;
+   text-align: left;
+   margin-top: -40px;
    margin-bottom: 48px;
-   color: #95A3A3;
+   color: #6E7C7C;
 }
 
 /* Portfolio Content */
