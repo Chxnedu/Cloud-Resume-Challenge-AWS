@@ -237,7 +237,7 @@ ul#nav li.current a { color: #F06000; }
 
 #resume {
    background: #fff;
-   padding-top: -100px;
+   padding-top: 20px;
    padding-bottom: 72px;
    overflow: hidden;
 }
@@ -288,7 +288,7 @@ ul#nav li.current a { color: #F06000; }
 #experience {
    background: #fff;
    padding-top: 90px;
-   padding-bottom: 72px;
+   padding-bottom: 20px;
    overflow: hidden;
 }
 
