@@ -90,6 +90,7 @@ locals {
     "scss" = "text/x-scss"
     "gif"  = "image/gif"
     "php"  = "application/x-httpd-php"
+    "pdf"  = "application/pdf"
   }
 }
 
